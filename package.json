@@ -1,0 +1,32 @@
+{
+  "name": "mongo-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dadiorchen/mongo-sandbox.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dadiorchen/mongo-sandbox/issues"
+  },
+  "homepage": "https://github.com/dadiorchen/mongo-sandbox#readme",
+  "dependencies": {
+    "expect-runtime": "^0.10.1",
+    "jest": "^26.6.3",
+    "loglevel": "^1.7.1",
+    "mongodb-memory-server": "^6.9.6",
+    "mongoose": "^5.12.1"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "debug": "0"
+    }
+  }
+}
