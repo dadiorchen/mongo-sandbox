@@ -21,6 +21,12 @@ describe("basic", () => {
 //        res();
 //      });
 //    });
+
+    const speciesSchema  = new mongoose.Schema({
+      name: String,
+    });
+    const Species = mongoose.model('Species', speciesSchema);
+
     const kittySchema = new mongoose.Schema({
       name: String,
       comments: [
@@ -29,7 +35,12 @@ describe("basic", () => {
         }
       ],
       age: Number,
+      species: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Species' 
+      },
     });
+
 
     //instance methods
     kittySchema.methods.speak = function () {
@@ -63,6 +74,10 @@ describe("basic", () => {
     const Kitten = mongoose.model('Kitten', kittySchema);
 
 
+    const cat = new Species({ 
+      name: 'cat',
+    });
+    await cat.save();
 
     const silence = new Kitten({ 
       name: 'Silence',
@@ -70,6 +85,7 @@ describe("basic", () => {
         body: "haha",
       }],
       age: 1,
+      species: cat._id,
     });
 
     //_id is a object
@@ -96,5 +112,16 @@ describe("basic", () => {
     expect(r).toBeDefined();
     expect(r.ageString).toBe("1 year");
 
+    //populate
+    console.log("r species:", r.species);
+    expect(r.species.toString()).toMatch(/[0-9a-z]+/);
+
+    r = await Kitten.findOne({age:1})
+      .populate("species");
+
+    console.log("r species:", r.species);
+    expect(r.species).toMatchObject({
+      _id: expect.anything(),
+    });
   });
 });
